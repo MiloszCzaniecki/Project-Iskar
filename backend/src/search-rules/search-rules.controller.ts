@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { SearchRulesService } from './search-rules.service';
 import { CreateSearchRuleDto } from './dto/create-search-rule.dto';
 
@@ -10,6 +10,11 @@ export class SearchRulesController {
   @Get()
   findAll() {
     return this.searchRulesService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.searchRulesService.findOne(id);
   }
 
   @Post()

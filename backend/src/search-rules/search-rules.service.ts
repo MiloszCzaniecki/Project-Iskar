@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { SearchRule } from './models/search-rule.model';
 import { CreateSearchRuleDto } from './dto/create-search-rule.dto';
 
@@ -24,6 +24,18 @@ export class SearchRulesService {
 
   findAll(): SearchRule[] {
     return this.searchRules;
+  }
+
+  findOne(id: string): SearchRule | undefined {
+    const singleSearchRule = this.searchRules.find(
+      (searchRule) => searchRule.id === id,
+    );
+
+    if (!singleSearchRule) {
+      throw new NotFoundException(`Search rule with id ${id} not found`);
+    }
+
+    return singleSearchRule;
   }
 
   create(createSearchRuleDto: CreateSearchRuleDto): SearchRule {
