@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { SearchRule } from './search-rules.module';
+import { SearchRule } from './models/search-rule.model';
+import { CreateSearchRuleDto } from './dto/create-search-rule.dto';
 
 @Injectable()
 export class SearchRulesService {
@@ -21,7 +22,19 @@ export class SearchRulesService {
     },
   ];
 
-  findAll(): SearchRule {
+  findAll(): SearchRule[] {
     return this.searchRules;
+  }
+
+  create(createSearchRuleDto: CreateSearchRuleDto): SearchRule {
+    const newSearchRule: SearchRule = {
+      id: crypto.randomUUID(),
+      keyword: createSearchRuleDto.keyword,
+      isActive: true,
+    };
+
+    this.searchRules.push(newSearchRule);
+
+    return newSearchRule;
   }
 }
