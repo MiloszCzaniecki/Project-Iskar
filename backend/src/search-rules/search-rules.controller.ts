@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { SearchRulesService } from './search-rules.service';
 import { CreateSearchRuleDto } from './dto/create-search-rule.dto';
+import { UpdateSearchRuleDto } from './dto/update-search-rule.dto';
 
 @Controller('search-rules')
 export class SearchRulesController {
@@ -21,4 +22,13 @@ export class SearchRulesController {
   create(@Body() createSearchRuleDto: CreateSearchRuleDto) {
     return this.searchRulesService.create(createSearchRuleDto);
   }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateSearchRuleDto: UpdateSearchRuleDto,
+  ) {
+    return this.searchRulesService.update(id, updateSearchRuleDto);
+  }
+
 }
